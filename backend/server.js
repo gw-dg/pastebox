@@ -7,7 +7,9 @@ const passport = require("passport");
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const pasteRoutes = require("./routes/pasteRoutes");
+const cors = require("cors");
 const app = express();
+app.use(cors({ origin: "http://localhost:5173" }));
 const passportStrategies = require("./middlewares/passportStrategies");
 app.use((req, res, next) => {
   console.log(

@@ -1,0 +1,89 @@
+@tailwind components;
+
+@layer components {
+  .mt-button {
+    @apply bg-buttonBg-light dark:bg-navbarBg-dark
+           border-2 
+            border-hoverBorderColor-dark
+           hover:border-hoverBorderColor-light dark:hover:border-borderColor-light
+           hover:text-white
+         text-textPrimary-dark 
+          shadow-shadow-light
+          rounded-full;
+  }
+
+  .mt-card {
+    @apply bg-secondaryBg-light dark:bg-secondaryBg-dark
+           /* border-2 border-borderColor-light dark:border-borderColor-dark */
+           text-textSecondary-light dark:text-textSecondary-dark;
+  }
+
+  .mt-text {
+    @apply text-textSecondary-light dark:text-textSecondary-dark;
+  }
+  .mt-card-footer {
+    @apply bg-tertiaryBg-light dark:bg-tertiaryBg-dark
+    text-textTertiary-light dark:text-textTertiary-dark;
+  }
+
+  .mt-navbar {
+    @apply bg-navbarBg-dark
+            border-borderColor-dark
+            text-textSecondary-dark
+            rounded-full;
+  }
+
+  .mt-navbar-btn {
+    @apply bg-buttonBg-light dark:bg-navbarBg-dark
+           hover:text-white
+         text-textPrimary-dark 
+          shadow-shadow-dark
+          rounded-full;
+  }
+
+  .mt-footer-btn {
+    @apply bg-buttonBg-light dark:bg-navbarBg-dark
+            /* border-hoverBorderColor-dark
+           hover:border-hoverBorderColor-light dark:hover:border-borderColor-light */
+           hover:text-white
+         text-textPrimary-dark 
+          shadow-shadow-dark
+          rounded-none;
+  }
+
+  .mt-input {
+    @apply bg-fourthBg-light
+           border-borderColor-light dark:border-borderColor-dark
+           text-textPrimary-light dark:text-textPrimary-dark;
+  }
+
+  .mt-bg {
+    @apply bg-primaryBg-light dark:bg-primaryBg-dark
+           /* border-borderColor-light dark:border-borderColor-dark */
+           text-textPrimary-light dark:text-textPrimary-dark;
+  }
+
+  .mt-footer {
+    @apply bg-primaryBg-dark 
+            /* border-borderColor-dark */
+            text-textPrimary-dark;
+  }
+
+  .mt-select {
+    @apply bg-secondaryBg-light dark:bg-secondaryBg-dark
+           /* border-2 border-borderColor-light dark:border-borderColor-dark */
+           text-textSecondary-light dark:text-textSecondary-dark
+           rounded-lg
+            h-8
+           focus:outline-none focus:border-focusBorderColor-light dark:focus:border-focusBorderColor-dark
+           /* hover:border-hoverBorderColor-light dark:hover:border-hoverBorderColor-dark */
+           transition-colors duration-200;
+  }
+
+  .mt-select-menu {
+    @apply bg-secondaryBg-light dark:bg-secondaryBg-dark
+           /* border-2 border-borderColor-light dark:border-borderColor-dark */
+           text-textSecondary-light dark:text-textSecondary-dark
+           rounded-lg;
+  }
+}

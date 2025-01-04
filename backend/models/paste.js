@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 
+const contentSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+});
+
 const pasteSchema = new mongoose.Schema({
-  content: {
-    type: String,
-    required: true,
-  },
+  content: contentSchema,
   expiration: {
     type: Date,
   },

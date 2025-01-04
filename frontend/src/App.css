@@ -1,6 +1,6 @@
 /* @import "@material-tailwind/react/tailwind.css"; */
 @import "@fortawesome/fontawesome-free/css/all.min.css";
-
+@import "./styles/material-components.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,31 +1,61 @@
-import { useState } from "react";
-import { StickyNavbar } from "./UI/Navbar";
-import { ThemeProvider } from "@material-tailwind/react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import { InputColors } from "./UI/Input";
-import { FooterWithSocialLinks } from "./UI/Footer";
-import { ProfileCard } from "./UI/Profile";
-import { ButtonVariants } from "./UI/Button";
 
+import { ThemeProvider } from "@material-tailwind/react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Homepage from "./Homepage";
+import Login from "./UI/Login";
+import { ProfileCard } from "./UI/Profile";
+import Paste from "./UI/Paste";
+export const PasteContext = React.createContext();
 function App() {
+  const [pasteData, setPasteData] = useState({});
+  const [sendPasteData, setSendPasteData] = useState({
+    content: {
+      title: "",
+      content: "",
+    },
+  });
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   window.addEventListener("popstate", () => {
+  //     document.getElementsByTagName("textarea")[0].value = "";
+  //   });
+  // }, []);
   return (
     <>
-      <ThemeProvider>
-        <div className="flex flex-col pt-3 bg-gradient-to-r from-gray-100 to-gray-300 justify-between h-screen">
-          {/* Navbar at the top */}
-          <StickyNavbar />
+      <PasteContext.Provider
+        value={{
+          pasteData,
+          setPasteData,
+          sendPasteData,
+          setSendPasteData,
+          loading,
+          setLoading,
+          isLoggedIn,
+          setLoggedIn,
+        }}>
+        <ThemeProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route
+                path="/login"
+                element={isLoggedIn ? <Navigate to="/" replace /> : <Login />}
+              />
+              <Route path="/profile/:username" element={<ProfileCard />} />
+              <Route path="/paste/:id" element={<Paste />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Router>
 
-          {/* Centered InputColors */}
-          <div className="flex flex-col gap-2 justify-center items-center flex-grow">
-            <InputColors />
-            <ButtonVariants />
-          </div>
-
-          {/* Footer at the bottom */}
-          <FooterWithSocialLinks />
-        </div>
-
-        {/* <div className="p-4">
+          {/* <div className="p-4">
           <ProfileCard
             name="Emma Roberts"
             title="UI/UX Designer"
@@ -34,7 +64,8 @@ function App() {
             backgroundImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZCvchzFy3m4ISz6qJASrs-O9iKJpu3mgm_Q&s"
           />
         </div> */}
-      </ThemeProvider>
+        </ThemeProvider>
+      </PasteContext.Provider>
     </>
   );
 }

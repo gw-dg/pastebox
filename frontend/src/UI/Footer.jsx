@@ -1,38 +1,48 @@
-import { Typography } from "@material-tailwind/react";
-
-const LINKS = [
-  {
-    title: "Product",
-    items: ["Overview", "Features", "Solutions", "Tutorials"],
-  },
-  {
-    title: "Company",
-    items: ["About us", "Careers", "Press", "News"],
-  },
-  {
-    title: "Resource",
-    items: ["Blog", "Newsletter", "Events", "Help center"],
-  },
-];
+import React, { useEffect, useState } from "react";
+import { Typography, Select, Option } from "@material-tailwind/react";
+import "../styles/material-components.css";
 
 const currentYear = new Date().getFullYear();
 
 export function FooterWithSocialLinks() {
+  const [value, setValue] = useState(() => {
+    const savedDarkMode = localStorage.getItem("darkMode");
+    return savedDarkMode
+      ? JSON.parse(savedDarkMode)
+        ? "Dark"
+        : "Light"
+      : "Light";
+  });
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedDarkMode = localStorage.getItem("darkMode");
+    return savedDarkMode ? JSON.parse(savedDarkMode) : false;
+  });
+
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+    if (darkMode) {
+      htmlElement.classList.add("dark");
+    } else {
+      htmlElement.classList.remove("dark");
+    }
+    // Save dark mode preference to localStorage
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
+
+  useEffect(() => {
+    setDarkMode(value === "Dark");
+  }, [value]);
+
   return (
-    <footer className="relative w-full">
+    <footer className="relative w-full mt-footer">
       <div className="mx-auto w-full max-w-7xl px-8">
-        <div className="mt-12 flex w-full flex-col items-center justify-center border-t border-blue-gray-50 py-4 md:flex-row md:justify-between">
-          <Typography
-            variant="small"
-            className="mb-4 text-center font-normal text-blue-gray-900 md:mb-0">
-            &copy; {currentYear} <a href="#">Made by Bhaskar</a>
-          </Typography>
-          <div className="flex gap-4 text-blue-gray-900 sm:justify-center">
+        <div className="py-4 flex w-full flex-row items-center justify-center border-t border-borderColor-dark dark:border-borderColor-light md:flex-row md:justify-between">
+          <div className="flex gap-4 sm:justify-center">
             {/* Twitter Icon */}
             <Typography
               as="a"
-              href="#"
-              className="opacity-80 transition-opacity hover:opacity-100">
+              href="https://x.com/bhaskar__jha"
+              className="opacity-80 transition-opacity hover:opacity-100 mt-footer-btn">
               <svg
                 className="h-5 w-5"
                 fill="currentColor"
@@ -44,8 +54,8 @@ export function FooterWithSocialLinks() {
             {/* GitHub Icon */}
             <Typography
               as="a"
-              href="#"
-              className="opacity-80 transition-opacity hover:opacity-100">
+              href="https://github.com/gw-dg"
+              className="opacity-80 transition-opacity hover:opacity-100 mt-footer-btn">
               <svg
                 className="h-5 w-5"
                 fill="currentColor"
@@ -61,8 +71,8 @@ export function FooterWithSocialLinks() {
             {/* LinkedIn Icon */}
             <Typography
               as="a"
-              href="#"
-              className="opacity-80 transition-opacity hover:opacity-100">
+              href="https://www.linkedin.com/in/bhaskar-jha-89226a218/"
+              className="opacity-80 transition-opacity hover:opacity-100 mt-footer-btn">
               <svg
                 className="h-5 w-5"
                 fill="currentColor"
@@ -75,6 +85,20 @@ export function FooterWithSocialLinks() {
                 />
               </svg>
             </Typography>
+          </div>
+          <div className=" flex items-center justify-center">
+            <Select
+              label="Select Theme"
+              color="blue-gray"
+              className="mt-footer" // Adjusted width and height
+              menuProps={{
+                className: "mt-footer ", // Custom background color for the dropdown menu
+              }}
+              value={value}
+              onChange={(val) => setValue(val)}>
+              <Option value="Light">Light</Option>
+              <Option value="Dark">Dark</Option>
+            </Select>
           </div>
         </div>
       </div>

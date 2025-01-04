@@ -6,24 +6,21 @@ const { optionalJWTAuth } = require("../middlewares/passportStrategies");
 
 const router = express.Router();
 
-router.get(
-  "/paste/:id",
-  passport.authenticate("jwt", { session: false, optional: true }),
-  async (req, res) => {
-    const { id } = req.params;
-    try {
-      const paste = await Paste.findOne({ _id: id });
-      if (!paste) return res.status(404).json({ message: "paste not found" });
-      const isPastePublic = paste.isPrivate;
-      const isItMyOwnPaste = req.user && req.user._id === paste.user;
-      if (!isPastePublic || isItMyOwnPaste) {
-        res.status(201).json(paste);
-      } else res.status(404).json({ error: "Unauthorized" });
-    } catch (err) {
-      res.status(500).json(err);
-    }
+router.get("/paste/:id", optionalJWTAuth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const paste = await Paste.findOne({ _id: id });
+    if (!paste) return res.status(404).json({ message: "paste not found" });
+    const isPastePublic = paste.isPrivate;
+    const isItMyOwnPaste =
+      req.user && req.user._id?.toString() === paste.user?.toString();
+    if (!isPastePublic || isItMyOwnPaste) {
+      res.status(201).json(paste);
+    } else res.status(404).json({ error: "Unauthorized" });
+  } catch (err) {
+    res.status(500).json(err);
   }
-);
+});
 
 router.post("/paste", optionalJWTAuth, async (req, res) => {
   try {
