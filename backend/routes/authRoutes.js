@@ -20,7 +20,15 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
-    res.status(201).json("New user created!");
+    const token = jwt.sign({ userId: newUser._id }, JWT_SECRET, {
+      expiresIn: "24h",
+    });
+
+    // Respond with the JWT token
+    return res.status(201).json({
+      token,
+      message: "New user created and logged in successfully!",
+    });
   } catch (err) {
     res.status(500).json({ "Internal Server Error": err });
   }
@@ -38,5 +46,29 @@ router.post("/login", (req, res) => {
     return res.json({ token, message: "Login successful" });
   })(req, res);
 });
+
+router.get(
+  "/validate",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    try {
+      // If we get here, the token is valid (passport middleware validated it)
+      // and req.user contains the decoded user data
+      return res.json({
+        valid: true,
+        user: {
+          username: req.user.username,
+          email: req.user.email,
+          _id: req.user._id,
+        },
+      });
+    } catch (error) {
+      return res.status(401).json({
+        valid: false,
+        error: "Invalid token",
+      });
+    }
+  }
+);
 
 module.exports = router;

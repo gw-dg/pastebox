@@ -1,37 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Typography, Select, Option } from "@material-tailwind/react";
 import "../styles/material-components.css";
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const currentYear = new Date().getFullYear();
 
 export function FooterWithSocialLinks() {
-  const [value, setValue] = useState(() => {
-    const savedDarkMode = localStorage.getItem("darkMode");
-    return savedDarkMode
-      ? JSON.parse(savedDarkMode)
-        ? "Dark"
-        : "Light"
-      : "Light";
-  });
-  const [darkMode, setDarkMode] = useState(() => {
-    const savedDarkMode = localStorage.getItem("darkMode");
-    return savedDarkMode ? JSON.parse(savedDarkMode) : false;
-  });
+  const { darkMode, setDarkMode } = useContext(DarkThemeContext);
+  // const [value, setValue] = useState(() => {
+  //   const savedDarkMode = localStorage.getItem("darkMode");
+  //   return savedDarkMode
+  //     ? JSON.parse(savedDarkMode)
+  //       ? "Dark"
+  //       : "Light"
+  //     : "Light";
+  // });
 
-  useEffect(() => {
-    const htmlElement = document.documentElement;
-    if (darkMode) {
-      htmlElement.classList.add("dark");
-    } else {
-      htmlElement.classList.remove("dark");
-    }
-    // Save dark mode preference to localStorage
-    localStorage.setItem("darkMode", JSON.stringify(darkMode));
-  }, [darkMode]);
+  // const [darkMode, setDarkMode] = useState(() => {
+  //   const savedDarkMode = localStorage.getItem("darkMode");
+  //   return savedDarkMode ? JSON.parse(savedDarkMode) : false;
+  // });
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   const htmlElement = document.documentElement;
+  //   if (darkMode) {
+  //     htmlElement.classList.add("dark");
+  //   } else {
+  //     htmlElement.classList.remove("dark");
+  //   }
+  //   // Save dark mode preference to localStorage
+  //   localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  // }, [darkMode]);
+
+  // useEffect(() => {
+  //   setDarkMode(value === "Dark");
+  // }, [value]);
+  const handleThemeChange = (value) => {
     setDarkMode(value === "Dark");
-  }, [value]);
+  };
 
   return (
     <footer className="relative w-full mt-footer">
@@ -94,8 +100,8 @@ export function FooterWithSocialLinks() {
               menuProps={{
                 className: "mt-footer ", // Custom background color for the dropdown menu
               }}
-              value={value}
-              onChange={(val) => setValue(val)}>
+              value={darkMode ? "Dark" : "Light"}
+              onChange={(val) => handleThemeChange(val)}>
               <Option value="Light">Light</Option>
               <Option value="Dark">Dark</Option>
             </Select>

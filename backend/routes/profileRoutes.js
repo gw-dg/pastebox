@@ -32,7 +32,9 @@ router.get("/profile/:username", optionalJWTAuth, async (req, res) => {
         email: user.email,
         // other profile details
       },
-      pastes: allPastes, // Include both public and private pastes
+      pastes: allPastes,
+      backgroundImage: user.backgroundImage,
+      profileImage: user.profileImage,
     });
   } catch (err) {
     res

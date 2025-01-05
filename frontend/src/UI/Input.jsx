@@ -2,7 +2,7 @@ import { Input, Textarea } from "@material-tailwind/react";
 import React, { useContext } from "react";
 import { PasteContext } from "../App";
 import "../styles/material-components.css";
-export function InputColors() {
+export function InputBox() {
   const { sendPasteData, setSendPasteData } = useContext(PasteContext);
 
   const handleTitleChange = (e) => {
@@ -24,27 +24,28 @@ export function InputColors() {
   };
 
   return (
-    <div className="flex w-[60rem] flex-col gap-3">
-      <Input
+    <div className="flex flex-col gap-3 w-full max-w-[60rem]">
+      <Textarea
         value={sendPasteData.content.title}
         color="blue-gray"
-        label="Title"
-        className="w-[60rem] h-[3rem] mt-input"
-        onChange={(e) => {
-          handleTitleChange(e);
+        placeholder="Enter Title Here..."
+        className="w-full max-w-[60rem] !min-h-[1rem] mt-input "
+        onChange={(e) => handleTitleChange(e)}
+        labelProps={{
+          className: "hidden",
         }}
       />
       <Textarea
-        label="Content"
         value={sendPasteData.content.content}
         color="blue-gray"
+        placeholder="Enter Content Here..."
         onChange={(e) => {
-          // const textarea = e.target;
-          // textarea.style.height = "auto"; // Reset height
-          // textarea.style.height = `${textarea.scrollHeight}px`; // Adjust to content
           handleContentChange(e); // Update state
         }}
-        className="resize-auto w-[60rem] !h-80 mt-input overflow-y-auto"
+        className="resize-auto w-full max-w-[60rem] min-h-[20rem] h-auto mt-input overflow-y-auto scrollbar-thin"
+        labelProps={{
+          className: "hidden",
+        }}
       />
     </div>
   );

@@ -12,6 +12,9 @@ import Homepage from "./Homepage";
 import Login from "./UI/Login";
 import { ProfileCard } from "./UI/Profile";
 import Paste from "./UI/Paste";
+import axios from "axios";
+import { DarkThemeProvider } from "./contexts/DarkThemeContext";
+
 export const PasteContext = React.createContext();
 function App() {
   const [pasteData, setPasteData] = useState({});
@@ -20,16 +23,50 @@ function App() {
       title: "",
       content: "",
     },
+    expiration: null,
+    isPrivate: false,
   });
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userToken, setUserToken] = useState(localStorage.getItem("token"));
+  const [loading, setLoading] = useState(false);
   // useEffect(() => {
   //   window.addEventListener("popstate", () => {
   //     document.getElementsByTagName("textarea")[0].value = "";
   //   });
   // }, []);
+
+  const setToken = (newToken) => {
+    setUserToken(newToken);
+  };
+
+  useEffect(() => {
+    const validateToken = async () => {
+      const storedToken = localStorage.getItem("token");
+      if (!storedToken) {
+        setLoggedIn(false);
+        return;
+      }
+
+      try {
+        // Add an endpoint in your backend to validate token
+        const response = await axios.get("http://localhost:3000/validate", {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        });
+        setLoggedIn(true);
+        setToken(storedToken);
+      } catch (error) {
+        localStorage.removeItem("token");
+        setLoggedIn(false);
+        setToken(null);
+      }
+    };
+
+    validateToken();
+  }, []);
+
   return (
-    <>
+    <DarkThemeProvider>
       <PasteContext.Provider
         value={{
           pasteData,
@@ -50,23 +87,26 @@ function App() {
                 element={isLoggedIn ? <Navigate to="/" replace /> : <Login />}
               />
               <Route path="/profile/:username" element={<ProfileCard />} />
+              <Route
+                path="/profile"
+                element={
+                  isLoggedIn ? (
+                    <Navigate
+                      to={`/profile/${localStorage.getItem("username")}`}
+                      replace
+                    />
+                  ) : (
+                    <Navigate to="/" replace />
+                  )
+                }
+              />
               <Route path="/paste/:id" element={<Paste />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Router>
-
-          {/* <div className="p-4">
-          <ProfileCard
-            name="Emma Roberts"
-            title="UI/UX Designer"
-            company="Company"
-            profileImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZCvchzFy3m4ISz6qJASrs-O9iKJpu3mgm_Q&s"
-            backgroundImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZCvchzFy3m4ISz6qJASrs-O9iKJpu3mgm_Q&s"
-          />
-        </div> */}
         </ThemeProvider>
       </PasteContext.Provider>
-    </>
+    </DarkThemeProvider>
   );
 }
 

@@ -3,7 +3,7 @@
 @layer components {
   .mt-button {
     @apply bg-buttonBg-light dark:bg-navbarBg-dark
-           border-2 
+           border-[1px] h-10
             border-hoverBorderColor-dark
            hover:border-hoverBorderColor-light dark:hover:border-borderColor-light
            hover:text-white
@@ -13,13 +13,13 @@
   }
 
   .mt-card {
-    @apply bg-secondaryBg-light dark:bg-secondaryBg-dark
+    @apply bg-secondaryBg-light dark:bg-primaryBg-dark1
            /* border-2 border-borderColor-light dark:border-borderColor-dark */
            text-textSecondary-light dark:text-textSecondary-dark;
   }
 
   .mt-text {
-    @apply text-textSecondary-light dark:text-textSecondary-dark;
+    @apply font-bold text-xl  text-textSecondary-light dark:text-textSecondary-dark;
   }
   .mt-card-footer {
     @apply bg-tertiaryBg-light dark:bg-tertiaryBg-dark
@@ -52,19 +52,22 @@
   }
 
   .mt-input {
-    @apply bg-fourthBg-light
+    @apply bg-primaryBg-light dark:bg-primaryBg-dark1 
            border-borderColor-light dark:border-borderColor-dark
            text-textPrimary-light dark:text-textPrimary-dark;
   }
 
   .mt-bg {
-    @apply bg-primaryBg-light dark:bg-primaryBg-dark
+    @apply bg-primaryBg-light dark:bg-primaryBg-pitchdark
            /* border-borderColor-light dark:border-borderColor-dark */
            text-textPrimary-light dark:text-textPrimary-dark;
   }
-
+  .mt-cardBg {
+    @apply bg-primaryBg-light dark:bg-primaryBg-dark1
+           /* border-borderColor-light dark:border-borderColor-dark */;
+  }
   .mt-footer {
-    @apply bg-primaryBg-dark 
+    @apply bg-primaryBg-pitchdark 
             /* border-borderColor-dark */
             text-textPrimary-dark;
   }
@@ -80,10 +83,100 @@
            transition-colors duration-200;
   }
 
+  .mt-dialog-btn {
+    @apply dark:bg-buttonActiveBg-light bg-buttonActiveBg-dark
+          border-2
+          dark:text-textPrimary-light text-textPrimary-dark
+           dark:hover:border-hoverBorderColor-light hover:border-borderColor-light
+           hover:text-white
+          shadow-shadow-light;
+  }
   .mt-select-menu {
     @apply bg-secondaryBg-light dark:bg-secondaryBg-dark
            /* border-2 border-borderColor-light dark:border-borderColor-dark */
            text-textSecondary-light dark:text-textSecondary-dark
            rounded-lg;
+  }
+  .mt-profile-card {
+    @apply bg-secondaryBg-light dark:bg-primaryBg-dark1
+           shadow-lg dark:shadow-shadow-dark
+           rounded-lg
+           overflow-hidden
+           transition-all duration-300
+           hover:shadow-xl dark:hover:shadow-shadow-deep-ocean;
+  }
+
+  .mt-profile-header {
+    @apply relative
+           w-full
+           h-[200px]
+           overflow-hidden
+           bg-gradient-to-r from-primaryBg-light to-secondaryBg-light
+           dark:from-primaryBg-dark dark:to-secondaryBg-dark;
+  }
+
+  .mt-profile-avatar {
+    @apply w-24 h-24
+           rounded-full
+           border-4 border-white dark:border-primaryBg-dark
+           overflow-hidden
+           shadow-lg dark:shadow-shadow-subtle-glow
+           bg-fourthBg-light dark:bg-fourthBg-dark;
+  }
+
+  .mt-profile-info {
+    @apply p-6
+           text-center
+           bg-tertiaryBg-light dark:bg-tertiaryBg-dark
+           border-b border-borderColor-light dark:border-borderColor-dark;
+  }
+
+  /* Dialog-related classes */
+  .mt-dialog {
+    @apply bg-primaryBg-light dark:bg-primaryBg-dark1
+           border border-borderColor-light dark:border-borderColor-dark
+           shadow-lg dark:shadow-shadow-mystic-blue
+           rounded-xl;
+  }
+
+  .mt-dialog-header {
+    @apply p-6
+           border-b border-borderColor-light dark:border-borderColor-dark
+           bg-secondaryBg-light dark:bg-secondaryBg-dark
+           text-textHeading-light dark:text-textHeading-dark;
+  }
+
+  .mt-dialog-body {
+    @apply p-6
+           bg-primaryBg-light dark:bg-primaryBg-dark1
+           text-textPrimary-light dark:text-textPrimary-dark
+           overflow-y-auto;
+  }
+
+  .mt-dialog-footer {
+    @apply p-4
+           bg-tertiaryBg-light dark:bg-tertiaryBg-dark
+           border-t border-borderColor-light dark:border-borderColor-dark
+           flex justify-end space-x-2;
+  }
+
+  /* Paste item classes */
+  .mt-paste-item {
+    @apply p-4
+           mt-card
+           rounded-lg
+           shadow-md dark:shadow-shadow-subtle-glow
+           cursor-pointer
+           transition-all duration-200
+           hover:shadow-lg dark:hover:shadow-shadow-neon-aqua
+           hover:scale-[1.01];
+  }
+
+  .mt-paste-status {
+    @apply px-3 py-1
+           text-sm
+           rounded-full
+           bg-fourthBg-light dark:bg-fourthBg-dark
+           text-textSecondary-light dark:text-textSecondary-dark;
   }
 }

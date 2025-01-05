@@ -13,6 +13,8 @@ export default withMT({
         primaryBg: {
           light: "#f0f6fc",
           dark: "#212225",
+          dark1: "#18181B",
+          pitchdark: "#000000",
         },
         secondaryBg: {
           light: "#e8eef4",
@@ -135,5 +137,29 @@ export default withMT({
     },
   },
 
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        ".scrollbar-thin": {
+          scrollbarWidth: "thin",
+          scrollbarColor: "#666 #e0e0e0", // Thumb and track color for Firefox
+        },
+        ".scrollbar-thin::-webkit-scrollbar": {
+          width: "8px", // Narrower scrollbar
+        },
+        ".scrollbar-thin::-webkit-scrollbar-track": {
+          background: "#e0e0e0", // Light gray background
+          borderRadius: "4px", // Rounded corners
+        },
+        ".scrollbar-thin::-webkit-scrollbar-thumb": {
+          background: "#666", // Dark gray color
+          borderRadius: "4px", // Rounded corners
+        },
+        ".scrollbar-thin::-webkit-scrollbar-thumb:hover": {
+          background: "#444", // Darker gray on hover
+        },
+      };
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
+  ],
 });

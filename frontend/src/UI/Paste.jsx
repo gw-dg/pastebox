@@ -23,8 +23,19 @@ export default function Paste() {
     const fetchPaste = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/paste/${id}`);
-        setPasteData(response.data);
+        const token = localStorage.getItem("token");
+        if (!token) {
+          alert("You must be logged in to access this.");
+          setLoading(false);
+          return;
+        }
+
+        const response = await axios.get(`http://localhost:3000/paste/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setPasteData(response.data); // Set paste data
       } catch (err) {
         console.error("Error:", err.message);
       } finally {
@@ -43,6 +54,7 @@ export default function Paste() {
       ) : (
         <PasteCard className="mt-card" />
       )}
+      {/* <FooterWithSocialLinks /> */}
     </div>
   );
 }

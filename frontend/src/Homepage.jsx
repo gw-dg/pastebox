@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { InputColors } from "./UI/Input";
+import { InputBox } from "./UI/Input";
 import { FooterWithSocialLinks } from "./UI/Footer";
 import { ButtonVariants } from "./UI/Button";
 import { StickyNavbar } from "./UI/Navbar";
@@ -27,7 +27,7 @@ export default function Homepage() {
 
         {/* Centered InputColors */}
         <div className="flex flex-col gap-2 justify-center items-center flex-grow">
-          <InputColors />
+          <InputBox />
           <ButtonVariants />
         </div>
 

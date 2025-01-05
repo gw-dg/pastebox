@@ -9,6 +9,7 @@ const pasteSchema = new mongoose.Schema({
   content: contentSchema,
   expiration: {
     type: Date,
+    default: null,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -24,6 +25,8 @@ const pasteSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+pasteSchema.index({ expiration: 1 }, { expireAfterSeconds: 0 });
 
 const Paste = mongoose.model("Paste", pasteSchema);
 module.exports = Paste;

@@ -16,7 +16,7 @@ router.get("/paste/:id", optionalJWTAuth, async (req, res) => {
       req.user && req.user._id?.toString() === paste.user?.toString();
     if (!isPastePublic || isItMyOwnPaste) {
       res.status(201).json(paste);
-    } else res.status(404).json({ error: "Unauthorized" });
+    } else res.status(403).json({ error: "Unauthorized" });
   } catch (err) {
     res.status(500).json(err);
   }
