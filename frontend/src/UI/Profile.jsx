@@ -45,12 +45,16 @@ export function ProfileCard() {
       setLoading(true);
       const token = localStorage.getItem("token");
       if (!token) {
-        setLoading(false);
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/paste/${pasteId}`
+        );
+        setSelectedPaste(response.data);
+        setOpen(true);
         return;
       }
 
       const response = await axios.get(
-        `http://localhost:3000/paste/${pasteId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/paste/${pasteId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -84,7 +88,7 @@ export function ProfileCard() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:3000/profile/${username}`,
+          `${import.meta.env.VITE_BACKEND_URL}/profile/${username}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

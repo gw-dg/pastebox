@@ -51,7 +51,7 @@ export default function Login() {
     setLoggedIn(false);
     try {
       const response = await axios.post(
-        "http://localhost:3000/login",
+        `${import.meta.env.VITE_BACKEND_URL}/login`,
         formData.login,
         {
           headers: { "Content-Type": "application/json" },
@@ -88,7 +88,7 @@ export default function Login() {
     setLoggedIn(false);
     try {
       const response = await axios.post(
-        "http://localhost:3000/register",
+        `${import.meta.env.VITE_BACKEND_URL}/register`,
         formData.register,
         {
           headers: { "Content-Type": "application/json" },

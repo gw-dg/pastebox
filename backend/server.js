@@ -8,8 +8,10 @@ const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const pasteRoutes = require("./routes/pasteRoutes");
 const cors = require("cors");
+require("dotenv").config();
 const app = express();
-app.use(cors({ origin: "http://localhost:5173" }));
+console.log(process.env.FRONTEND_URL);
+app.use(cors({ origin: `${process.env.FRONTEND_URL}` }));
 const passportStrategies = require("./middlewares/passportStrategies");
 app.use((req, res, next) => {
   console.log(

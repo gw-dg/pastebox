@@ -25,16 +25,21 @@ export default function Paste() {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
-          alert("You must be logged in to access this.");
-          setLoading(false);
+          const response = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/paste/${id}`
+          );
+          setPasteData(response.data);
           return;
         }
 
-        const response = await axios.get(`http://localhost:3000/paste/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/paste/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setPasteData(response.data); // Set paste data
       } catch (err) {
         console.error("Error:", err.message);

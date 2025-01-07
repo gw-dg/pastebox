@@ -20,7 +20,7 @@ export function ButtonVariants() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:3000/paste",
+        `${import.meta.env.VITE_BACKEND_URL}/paste`,
         sendPasteData
       );
       console.log("paste created : ", response.data);

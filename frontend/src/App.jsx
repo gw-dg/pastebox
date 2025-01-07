@@ -50,9 +50,12 @@ function App() {
 
       try {
         // Add an endpoint in your backend to validate token
-        const response = await axios.get("http://localhost:3000/validate", {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        });
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/validate`,
+          {
+            headers: { Authorization: `Bearer ${storedToken}` },
+          }
+        );
         setLoggedIn(true);
         setToken(storedToken);
       } catch (error) {
