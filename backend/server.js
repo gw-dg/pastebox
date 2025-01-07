@@ -11,7 +11,24 @@ const cors = require("cors");
 require("dotenv").config();
 const app = express();
 console.log(process.env.FRONTEND_URL);
-app.use(cors({ origin: `${process.env.FRONTEND_URL}` }));
+
+// app.use(cors({ origin: `${process.env.FRONTEND_URL}` }));
+app.use(cors()); // Remove any existing cors configuration
+
+// Enable pre-flight requests for all routes
+app.options("*", cors());
+
+// Add headers to all responses
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", `${process.env.FRONTEND_URL}`);
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
+
 const passportStrategies = require("./middlewares/passportStrategies");
 app.use((req, res, next) => {
   console.log(
