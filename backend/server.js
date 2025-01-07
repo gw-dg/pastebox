@@ -9,9 +9,10 @@ const profileRoutes = require("./routes/profileRoutes");
 const pasteRoutes = require("./routes/pasteRoutes");
 const cors = require("cors");
 require("dotenv").config();
+
 const app = express();
 console.log(process.env.FRONTEND_URL);
-app.use(cors());
+
 const passportStrategies = require("./middlewares/passportStrategies");
 app.use((req, res, next) => {
   console.log(
@@ -20,8 +21,10 @@ app.use((req, res, next) => {
   );
   next();
 });
+
 app.use(express.json());
 app.use(passport.initialize());
+app.use(cors());
 app.use("/", authRoutes);
 app.use("/", profileRoutes);
 app.use("/", pasteRoutes);
