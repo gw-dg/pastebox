@@ -25,6 +25,13 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(passport.initialize());
 app.use(cors());
+app.get("/", (request, response) => {
+  ///server to client
+  response.json({
+    message: "Server is running " + PORT,
+  });
+});
+
 app.use("/", authRoutes);
 app.use("/", profileRoutes);
 app.use("/", pasteRoutes);
@@ -43,5 +50,5 @@ app.post("/pastes", async (req, res) => {
 const PORT = 3000;
 
 connectDB().then(() => {
-  app.listen(PORT);
+  app.listen(PORT, () => {});
 });
