@@ -12,21 +12,29 @@ require("dotenv").config();
 const app = express();
 console.log(process.env.FRONTEND_URL);
 
-// app.use(cors({ origin: `${process.env.FRONTEND_URL}` }));
-app.use(cors()); // Remove any existing cors configuration
+const allowedOrigins = ["https://the-last-note-f2x7.vercel.app"];
 
-// Enable pre-flight requests for all routes
-app.options("*", cors());
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Check if origin is in allowedOrigins
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+    preflightContinue: true,
+    optionsSuccessStatus: 204,
+  })
+);
 
-// Add headers to all responses
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", `${process.env.FRONTEND_URL}`);
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  next();
+// Add OPTIONS handling for preflight requests
+app.options("*", (req, res) => {
+  res.status(204).send();
 });
 
 const passportStrategies = require("./middlewares/passportStrategies");
