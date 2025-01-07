@@ -18,9 +18,9 @@ export function PasteCard() {
   }
 
   const handleCopy = async () => {
-    if (selectedPaste?.content?.content) {
+    if (pasteData?.content?.content) {
       try {
-        await navigator.clipboard.writeText(selectedPaste.content.content);
+        await navigator.clipboard.writeText(pasteData?.content?.content);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
       } catch (err) {
