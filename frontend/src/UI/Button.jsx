@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Loader2 } from "lucide-react";
 import { PasteContext } from "../App";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Select,
@@ -11,6 +12,7 @@ import {
 import axios from "axios";
 import "../styles/material-components.css";
 export function ButtonVariants() {
+  const navigate = useNavigate();
   const { sendPasteData, setSendPasteData, isLoggedIn } =
     useContext(PasteContext);
   const [loading, setLoading] = useState(false);
@@ -24,7 +26,8 @@ export function ButtonVariants() {
         sendPasteData
       );
       console.log("paste created : ", response.data);
-      alert(`Paste created! Link: ${response.data._id}`);
+      navigate(`/paste/${response.data._id}`);
+      // alert(`Paste created! Link: ${response.data._id}`);
     } catch (err) {
       console.log("Error creating paste : ", err);
     } finally {
