@@ -25,21 +25,27 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(passport.initialize());
 app.use(cors());
-app.use("/", authRoutes);
-app.use("/", profileRoutes);
-app.use("/", pasteRoutes);
+db()
+  .connect.then(() => {
+    app.use("/", authRoutes);
+    app.use("/", profileRoutes);
+    app.use("/", pasteRoutes);
+    app.post("/pastes", async (req, res) => {
+      try {
+        const data = req.body;
+        const newPaste = new Paste(data);
+        const response = await newPaste.save();
+        res.status(201).json(response);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    });
 
-app.post("/pastes", async (req, res) => {
-  try {
-    const data = req.body;
-    const newPaste = new Paste(data);
-    const response = await newPaste.save();
-    res.status(201).json(response);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+    const PORT = 3000;
 
-const PORT = 3000;
-
-app.listen(PORT);
+    app.listen(PORT);
+  })
+  .catch((error) => {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  });
