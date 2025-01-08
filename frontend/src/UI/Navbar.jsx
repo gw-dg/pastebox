@@ -10,6 +10,7 @@ import {
 } from "@material-tailwind/react";
 import { PasteContext } from "../App";
 import "../styles/material-components.css";
+import { Logo } from "./Logo";
 
 export function StickyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -64,11 +65,14 @@ export function StickyNavbar() {
   return (
     <Navbar className="inline mx-auto max-w-screen-xl mt-navbar  px-4 py-3 ">
       <div className="flex items-center justify-between">
-        <Typography
+        {/*<Typography
           as="a"
           href="#"
           className="mr-4 cursor-pointer py-1.5 font-medium">
           The Last Note
+        </Typography>*/}
+        <Typography href="/" className="hover:opacity-90 transition-opacity">
+          <Logo />
         </Typography>
         <div className="flex items-center gap-4">
           {isLoggedIn ? (

@@ -5,6 +5,7 @@ import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { FooterWithSocialLinks } from "./Footer";
 import { PasteContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { Logo } from "./Logo";
 
 import "../styles/material-components.css";
 
@@ -117,11 +118,14 @@ export default function Login() {
     <div className="flex flex-col h-screen mt-bg pt-2">
       <Navbar className="inline mx-auto max-w-screen-xl mt-navbar  px-4 py-3 ">
         <div className="flex items-center justify-between">
-          <Typography
+          {/* <Typography
             as="a"
             href="#"
             className="mr-4 cursor-pointer py-1.5 font-medium">
             The Last Note
+          </Typography> */}
+          <Typography href="/" className="hover:opacity-90 transition-opacity">
+            <Logo />
           </Typography>
         </div>
       </Navbar>
